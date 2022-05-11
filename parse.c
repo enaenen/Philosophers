@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:47:31 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/11 20:48:08 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/12 01:41:19 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static int	parse_5(char **argv, t_main_info *info)
 		return (PARSE_ERROR);
 	info->tts = n;
 	info->must_eat = 0;
+	info->finish = 0;
+	info->eat_finish = 0;
 	return (0);
 }
 
@@ -67,12 +69,13 @@ static int parse_6(char **argv,t_main_info *info)
 	return (0);
 }
 
-int	parse(int argc, char **argv, t_main_info *info)
+int	parse(int argc, char **argv, t_table *table)
 {
+	table->info = (t_main_info *)malloc(sizeof(t_main_info));
 	if (argc == 5)
-		return (parse_5(argv, info));
+		return (parse_5(argv, table->info));
 	if (argc == 6)
-		return (parse_6(argv, info));
+		return (parse_6(argv, table->info));
 	else
 		return (PARSE_ERROR);
 }
