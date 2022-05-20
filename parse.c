@@ -34,7 +34,7 @@ static int	ft_atoll(char *str, long long *n)
 	return (0);
 }
 
-static int	parse_5(char **argv, t_main_info *info)
+static int	parse_5(char **argv, t_info *info)
 {
 	long long	n;
 	
@@ -56,7 +56,7 @@ static int	parse_5(char **argv, t_main_info *info)
 	return (0);
 }
 
-static int parse_6(char **argv,t_main_info *info)
+static int parse_6(char **argv,t_info *info)
 {
 	long long	 n;
 	
@@ -65,13 +65,12 @@ static int parse_6(char **argv,t_main_info *info)
 	if (ft_atoll(argv[5], &n))
 		return (PARSE_ERROR);
 	info->must_eat = n;
-	info->option = 1;
 	return (0);
 }
 
 int	parse(int argc, char **argv, t_table *table)
 {
-	table->info = (t_main_info *)malloc(sizeof(t_main_info));
+	table->info = (t_info *)malloc(sizeof(t_info));
 	if (argc == 5)
 		return (parse_5(argv, table->info));
 	if (argc == 6)

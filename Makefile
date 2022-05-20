@@ -18,7 +18,7 @@ AR		= ar rcs
 RM		= rm -f
 LEAK	= -g3 -fsanitize=address
 
-SRC = main.c parse.c
+SRC = main.c parse.c philo_run.c
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)
 

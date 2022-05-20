@@ -15,43 +15,49 @@
 
 # include <pthread.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef unsigned long long	t_timestamp;
-typedef struct	s_philo
-{
-	unsigned int	id;
-	unsigned int	tte;
-	unsigned int	tts;
-	unsigned int	must_eat;
-	t_timestamp		started_at;
-	t_timestamp		last_eat;
-	pthread_t		philo;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	fork;
-}		t_philo;
+# define C_NRML "\033[0m" 
+# define C_RED "\033[31m" 
+# define C_GREN "\033[32m"
+# define C_YLLW "\033[33m" 
+# define C_BLUE "\033[34m" 
+# define C_PRPL "\033[35m"
+# define C_DEFAULT "\x1b[0m"
 
-typedef struct s_main_info
+
+typedef unsigned long long	t_timestamp;
+typedef struct	s_info
 {
-	unsigned int	philos;
+	int	philos;
 	unsigned int	ttd;
 	unsigned int	tte;
 	unsigned int	tts;
 	unsigned int	must_eat;
 	unsigned int	eat_finish;
-	unsigned int	option;
-	int				finish;
+	unsigned int	finish;
 	t_timestamp		start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	eating;
-}	t_main_info;
+}		t_info;
+
+typedef struct s_philo
+{
+	unsigned int	id;
+	unsigned int	eat_cnt;
+	unsigned int	l_fork;
+	unsigned int	r_fork;
+	t_timestamp		time;
+	pthread_t		thread_id;
+	t_info			*info;
+}	t_philo;
 
 typedef struct s_table
 {
-	t_main_info	*info;
+	t_info	*info;
 	t_philo	*philos;
 }	t_table;
 
@@ -62,7 +68,11 @@ enum e_error_status
 	MUTEX_ERROR
 };
 
-int	parse(int argc, char **argv, t_main_info *info);
+
+void	init_philo(t_table *table);
+size_t	ft_strlen(const char *s);
+void	run(t_table *table);
+int	parse(int argc, char **argv, t_table *table);
 
 
 #endif
