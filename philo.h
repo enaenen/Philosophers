@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:58 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/12 01:43:14 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 21:43:29 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# define C_NRML "\033[0m" 
-# define C_RED "\033[31m" 
-# define C_GREN "\033[32m"
-# define C_YLLW "\033[33m" 
-# define C_BLUE "\033[34m" 
-# define C_PRPL "\033[35m"
-# define C_DEFAULT "\x1b[0m"
+# define SLEEPING "\033[0m is sleeping\x1b[0m"
+# define THINKING "\033[34m is thinking\x1b[0m"
+# define TAKE_FORK "\033[32m has taken a fork\x1b[0m"
+# define EATING "\033[33m is eating\x1b[0m"
+# define DEAD "\033[31m died\x1b[0m"
 
-
-typedef unsigned long long	t_timestamp;
+typedef long long	t_timestamp;
 typedef struct	s_info
 {
 	int	philos;
@@ -72,7 +69,7 @@ enum e_error_status
 void	init_philo(t_table *table);
 size_t	ft_strlen(const char *s);
 void	run(t_table *table);
-int	parse(int argc, char **argv, t_table *table);
-
+void		parse(int argc, char **argv, t_table *table);
+void	program_exit(int	status);
 
 #endif

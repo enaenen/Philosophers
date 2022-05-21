@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:42 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/12 01:45:50 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 21:32:13 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,38 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-static int	program_exit(int	status)
+void	program_exit(int	status)
 {
 	char	*msg;
 
 	if (!status)
-		return (0);
+		exit(EXIT_SUCCESS);
 	if (status == PARSE_ERROR)
-		msg = "INPUT ERROR\n";
+		msg = "INPUT ERROR usage : ./philo philos ttd tte tts [musteat]\n";
+	if (status == ALLOC_ERROR)
+		msg = "ALLOC ERROR\n";
+	if (status == MUTEX_ERROR)
+		msg = "MUTEX ERROR\n";
 
 	write(2, msg, ft_strlen(msg));
-	return (status);
+	exit(EXIT_FAILURE);
 }
 
 void	init_forks(t_table *table)
 {
 	int i;
 	if (pthread_mutex_init(&(table->info->print), NULL))
-		printf("error\n");
-		//error; mutex init failed
+		program_exit(MUTEX_ERROR);
 	if (pthread_mutex_init(&(table->info->eating), NULL))
-		printf("error\n");
-		//error  mutex init failed
+		program_exit(MUTEX_ERROR);
 	table->info->forks = malloc(sizeof(pthread_mutex_t) * table->info->philos);
 	if (!(table->info->forks))
-		printf("error\n");
-		//error  - malloc forks array failed
+		program_exit(ALLOC_ERROR);
 	i = 0;
 	while (i < table->info->philos)
 	{
 		if (pthread_mutex_init(&(table->info->forks[i]), NULL))
-			printf("error\n");
-			//error mutex init failed
+			program_exit(MUTEX_ERROR);
 		i++;
 	}
 }
@@ -61,11 +61,11 @@ void	init_forks(t_table *table)
 void	init_philo(t_table *table)
 {
 	int	i;
+
 	i = 0;
 	table->philos = malloc(sizeof(t_philo) * (table->info->philos + 1));
 	if (!table->philos)
-		printf("error\n");
-		//malloc philo failed;
+		program_exit(ALLOC_ERROR);
 	while (i < table->info->philos)
 	{
 		table->philos[i].id = i;
@@ -81,15 +81,12 @@ void	init_philo(t_table *table)
 int		main(int argc, char **argv)
 {
 	t_table		table;
-	int			flag;
 
-	flag = 0;
-	if (parse(argc, argv, &table))
-		return (program_exit(PARSE_ERROR));
+	parse(argc, argv, &table);
 	init_forks(&table);
 	init_philo(&table);
 	if (table.info->philos < 1)
-		exit(1);
+		program_exit(PARSE_ERROR);
 	run(&table);
 	return (0);
 }

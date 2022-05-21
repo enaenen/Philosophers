@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:47:31 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/12 01:41:19 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 21:16:09 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,25 @@ static int	parse_5(char **argv, t_info *info)
 	long long	n;
 	
 	if (ft_atoll(argv[1], &n))
-		return (PARSE_ERROR);
+		program_exit(PARSE_ERROR);
 	info->philos = n;
+	printf("philos %u\n", info->philos);
+
 	if (ft_atoll(argv[2], &n))
-		return (PARSE_ERROR);
+		program_exit(PARSE_ERROR);
 	info->ttd = n;
+	printf("ttd %u\n", info->ttd);
+
 	if (ft_atoll(argv[3], &n))
-		return (PARSE_ERROR);
+		program_exit(PARSE_ERROR);
 	info->tte = n;
+	printf("tte %u\n", info->tte);
+
 	if (ft_atoll(argv[4], &n))
-		return (PARSE_ERROR);
+		program_exit(PARSE_ERROR);
 	info->tts = n;
+	printf("tts %u\n", info->tts);
+
 	info->must_eat = 0;
 	info->finish = 0;
 	info->eat_finish = 0;
@@ -68,13 +76,13 @@ static int parse_6(char **argv,t_info *info)
 	return (0);
 }
 
-int	parse(int argc, char **argv, t_table *table)
+void	parse(int argc, char **argv, t_table *table)
 {
 	table->info = (t_info *)malloc(sizeof(t_info));
 	if (argc == 5)
-		return (parse_5(argv, table->info));
-	if (argc == 6)
-		return (parse_6(argv, table->info));
+		parse_5(argv, table->info);
+	else if (argc == 6)
+		parse_6(argv, table->info);
 	else
-		return (PARSE_ERROR);
+		program_exit(PARSE_ERROR);
 }

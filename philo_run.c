@@ -45,16 +45,16 @@ void	philo_print(char *msg, t_info *info, int philo_id)
 int	philo_even(t_info *info, t_philo *philo)
 {
 	pthread_mutex_lock(&(info->forks[philo->l_fork]));
-	philo_print("has taken a fork", info, philo->id);
+	philo_print(TAKE_FORK, info, philo->id);
 	if (philo->r_fork == philo->l_fork)
 	{
 		pthread_mutex_unlock(&(info->forks[philo->l_fork]));
 		return (1);
 	}
 	pthread_mutex_lock(&(info->forks[philo->r_fork]));
-	philo_print("has taken a fork", info, philo->id);
+	philo_print(TAKE_FORK, info, philo->id);
 	pthread_mutex_lock(&(info->eating));
-	philo_print("is eating", info, philo->id);
+	philo_print(EATING, info, philo->id);
 	philo->time = get_time();
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&(info->eating));
@@ -69,16 +69,16 @@ int	philo_even(t_info *info, t_philo *philo)
 int	philo_odd(t_info *info, t_philo *philo)
 {
 	pthread_mutex_lock(&(info->forks[philo->r_fork]));
-	philo_print("has taken a fork", info, philo->id);
+	philo_print(TAKE_FORK, info, philo->id);
 	if (philo->r_fork == philo->l_fork)
 	{
 		pthread_mutex_unlock(&(info->forks[philo->r_fork]));
 		return (1);
 	}
 	pthread_mutex_lock(&(info->forks[philo->l_fork]));
-	philo_print("has taken a fork", info, philo->id);
+	philo_print(TAKE_FORK, info, philo->id);
 	pthread_mutex_lock(&(info->eating));
-	philo_print("is eating", info, philo->id);
+	philo_print(EATING, info, philo->id);
 	philo->time = get_time();
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&(info->eating));
@@ -109,9 +109,9 @@ void	*routine(void *philo)
 			flag = philo_odd(info, cur);
 		if (flag)
 			break ;
-		philo_print("C_BLUE is sleeping C_BLUE", info, cur->id);
+		philo_print(SLEEPING, info, cur->id);
 		check_time(info, 2);
-		philo_print("is thinking", info, cur->id);
+		philo_print(THINKING, info, cur->id);
 		usleep(10);
 	}
 	return (0);
@@ -166,7 +166,7 @@ void	check_table(t_table *table)
 			cur = &(table->philos[i]);
 			if (get_time() - cur->time > table->info->ttd)
 			{
-				philo_print("died", table->info, i);
+				philo_print(DEAD, table->info, i);
 				table->info->finish = 1;
 			}
 			pthread_mutex_unlock(&(table->info->eating));
@@ -189,7 +189,7 @@ void	run(t_table *table)
     {
         tmp = (void *)&table->philos[i];
         if (pthread_create(&(table->philos[i].thread_id), NULL, routine,tmp))
-            //error created thread failed
+			program_exit(ALLOC_ERROR);
         table->philos[i].time = get_time();
         i++;
     }
