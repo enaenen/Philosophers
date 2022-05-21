@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:58 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 21:43:29 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 22:11:53 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,9 @@ size_t	ft_strlen(const char *s);
 void	run(t_table *table);
 void		parse(int argc, char **argv, t_table *table);
 void	program_exit(int	status);
+t_timestamp	get_time(void);
+void	check_time(t_info *info, int mode);
+void	philo_print(char *msg, t_info *info, int philo_id);
+void	*cycle(void *philo);
 
 #endif

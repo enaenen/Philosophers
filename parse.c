@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:47:31 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 21:16:09 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 22:15:14 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_isdigit(int c)
 
 static int	ft_atoll(char *str, long long *n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	*n = 0;
@@ -37,37 +37,29 @@ static int	ft_atoll(char *str, long long *n)
 static int	parse_5(char **argv, t_info *info)
 {
 	long long	n;
-	
+
 	if (ft_atoll(argv[1], &n))
 		program_exit(PARSE_ERROR);
 	info->philos = n;
-	printf("philos %u\n", info->philos);
-
 	if (ft_atoll(argv[2], &n))
 		program_exit(PARSE_ERROR);
 	info->ttd = n;
-	printf("ttd %u\n", info->ttd);
-
 	if (ft_atoll(argv[3], &n))
 		program_exit(PARSE_ERROR);
 	info->tte = n;
-	printf("tte %u\n", info->tte);
-
 	if (ft_atoll(argv[4], &n))
 		program_exit(PARSE_ERROR);
 	info->tts = n;
-	printf("tts %u\n", info->tts);
-
 	info->must_eat = 0;
 	info->finish = 0;
 	info->eat_finish = 0;
 	return (0);
 }
 
-static int parse_6(char **argv,t_info *info)
+static int	parse_6(char **argv, t_info *info)
 {
-	long long	 n;
-	
+	long long	n;
+
 	if (parse_5(argv, info))
 		return (PARSE_ERROR);
 	if (ft_atoll(argv[5], &n))

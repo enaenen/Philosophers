@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:42 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 21:32:13 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 22:13:14 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-void	program_exit(int	status)
+void	program_exit(int status)
 {
 	char	*msg;
 
@@ -34,14 +34,15 @@ void	program_exit(int	status)
 		msg = "ALLOC ERROR\n";
 	if (status == MUTEX_ERROR)
 		msg = "MUTEX ERROR\n";
-
 	write(2, msg, ft_strlen(msg));
 	exit(EXIT_FAILURE);
 }
 
 void	init_forks(t_table *table)
 {
-	int i;
+	int	i;
+
+	i = 0;
 	if (pthread_mutex_init(&(table->info->print), NULL))
 		program_exit(MUTEX_ERROR);
 	if (pthread_mutex_init(&(table->info->eating), NULL))
@@ -49,7 +50,6 @@ void	init_forks(t_table *table)
 	table->info->forks = malloc(sizeof(pthread_mutex_t) * table->info->philos);
 	if (!(table->info->forks))
 		program_exit(ALLOC_ERROR);
-	i = 0;
 	while (i < table->info->philos)
 	{
 		if (pthread_mutex_init(&(table->info->forks[i]), NULL))
@@ -78,7 +78,7 @@ void	init_philo(t_table *table)
 	}
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_table		table;
 
