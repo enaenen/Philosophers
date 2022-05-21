@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:04:57 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 22:11:01 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 22:36:43 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	check_table(t_table *table)
 			cur = &(table->philos[i]);
 			if (get_time() - cur->time > table->info->ttd)
 			{
-				philo_print(DEAD, table->info, i);
+				state_print(DEAD, table->info, i);
 				table->info->finish = 1;
 			}
 			pthread_mutex_unlock(&(table->info->eating));
@@ -83,7 +83,7 @@ void	run(t_table *table)
 	while (i < table->info->philos)
 	{
 		philo = (void *)&table->philos[i];
-		if (pthread_create(&(table->philos[i].thread_id), NULL, cycle, philo))
+		if (pthread_create(&(table->philos[i].thread_id), NULL, routine, philo))
 			program_exit(ALLOC_ERROR);
 		table->philos[i].time = get_time();
 		i++;

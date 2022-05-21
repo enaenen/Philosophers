@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cycle.c                                            :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:07:29 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 22:13:29 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/21 22:37:17 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_print(char *msg, t_info *info, int philo_id)
+void	state_print(char *msg, t_info *info, int philo_id)
 {
 	pthread_mutex_lock(&(info->print));
 	if (!(info->finish) && !(info->eat_finish))
@@ -27,16 +27,16 @@ void	philo_print(char *msg, t_info *info, int philo_id)
 int	philo_even(t_info *info, t_philo *philo)
 {
 	pthread_mutex_lock(&(info->forks[philo->l_fork]));
-	philo_print(TAKE_FORK, info, philo->id);
+	state_print(TAKE_FORK, info, philo->id);
 	if (philo->r_fork == philo->l_fork)
 	{
 		pthread_mutex_unlock(&(info->forks[philo->l_fork]));
 		return (1);
 	}
 	pthread_mutex_lock(&(info->forks[philo->r_fork]));
-	philo_print(TAKE_FORK, info, philo->id);
+	state_print(TAKE_FORK, info, philo->id);
 	pthread_mutex_lock(&(info->eating));
-	philo_print(EATING, info, philo->id);
+	state_print(EATING, info, philo->id);
 	philo->time = get_time();
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&(info->eating));
@@ -51,16 +51,16 @@ int	philo_even(t_info *info, t_philo *philo)
 int	philo_odd(t_info *info, t_philo *philo)
 {
 	pthread_mutex_lock(&(info->forks[philo->r_fork]));
-	philo_print(TAKE_FORK, info, philo->id);
+	state_print(TAKE_FORK, info, philo->id);
 	if (philo->r_fork == philo->l_fork)
 	{
 		pthread_mutex_unlock(&(info->forks[philo->r_fork]));
 		return (1);
 	}
 	pthread_mutex_lock(&(info->forks[philo->l_fork]));
-	philo_print(TAKE_FORK, info, philo->id);
+	state_print(TAKE_FORK, info, philo->id);
 	pthread_mutex_lock(&(info->eating));
-	philo_print(EATING, info, philo->id);
+	state_print(EATING, info, philo->id);
 	philo->time = get_time();
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&(info->eating));
@@ -72,7 +72,7 @@ int	philo_odd(t_info *info, t_philo *philo)
 	return (0);
 }
 
-void	*cycle(void *philo)
+void	*routine(void *philo)
 {
 	t_info	*info;
 	t_philo	*cur;
@@ -91,9 +91,9 @@ void	*cycle(void *philo)
 			flag = philo_odd(info, cur);
 		if (flag)
 			break ;
-		philo_print(SLEEPING, info, cur->id);
+		state_print(SLEEPING, info, cur->id);
 		check_time(info, 2);
-		philo_print(THINKING, info, cur->id);
+		state_print(THINKING, info, cur->id);
 		usleep(10);
 	}
 	return (0);
