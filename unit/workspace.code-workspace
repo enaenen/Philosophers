@@ -14,7 +14,8 @@
 		"files.associations": {
 			"unistd.h": "c",
 			"philo.h": "c",
-			"pthread.h": "c"
+			"pthread.h": "c",
+			"philo_bonus.h": "c"
 		}
 	}
 }
