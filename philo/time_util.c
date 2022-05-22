@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:09:34 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/22 15:13:15 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/22 17:37:29 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	check_time(t_info *info, int mode)
 	t_timestamp	start;
 	t_timestamp	current;
 
-	if (mode == 1)
+	if (mode == EAT_CHECK)
 		limit = info->tte;
-	else if (mode == 2)
+	else if (mode == SLEEP_CHECK)
 		limit = info->tts;
 	start = get_time();
 	while (!(info->finish))

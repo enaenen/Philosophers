@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:07:29 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 23:35:58 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/22 17:36:51 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	philo_even(t_info *info, t_philo *philo)
 	philo->last_eat_time = get_time();
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&(info->eating));
-	check_time(info, 1);
+	check_time(info, EAT_CHECK);
 	pthread_mutex_unlock(&(info->forks[philo->l_fork]));
 	pthread_mutex_unlock(&(info->forks[philo->r_fork]));
 	if (info->eat_finish || info->finish)
@@ -64,7 +64,7 @@ int	philo_odd(t_info *info, t_philo *philo)
 	philo->last_eat_time = get_time();
 	philo->eat_cnt++;
 	pthread_mutex_unlock(&(info->eating));
-	check_time(info, 1);
+	check_time(info, EAT_CHECK);
 	pthread_mutex_unlock(&(info->forks[philo->r_fork]));
 	pthread_mutex_unlock(&(info->forks[philo->l_fork]));
 	if (info->eat_finish || info->finish)
@@ -92,7 +92,7 @@ void	*routine(void *philo)
 		if (flag)
 			break ;
 		state_print(SLEEPING, info, cur->id);
-		check_time(info, 2);
+		check_time(info, SLEEP_CHECK);
 		state_print(THINKING, info, cur->id);
 		usleep(10);
 	}

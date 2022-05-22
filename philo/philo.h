@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:58 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 23:20:16 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/22 17:36:18 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ enum e_error_status
 	ALLOC_ERROR,
 	PARSE_ERROR,
 	MUTEX_ERROR
+};
+
+enum e_checktime_mode
+{
+	EAT_CHECK,
+	SLEEP_CHECK
 };
 
 
