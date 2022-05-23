@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:04:57 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 23:24:04 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 21:16:22 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	check_table(t_table *table)
 	}
 }
 
-void	run(t_table *table)
+void	philo_run(t_table *table)
 {
 	int		i;
 	void	*philo;

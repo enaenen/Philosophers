@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:42 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 23:20:26 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 21:16:54 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	program_exit(int status)
 	exit(EXIT_FAILURE);
 }
 
-void	init_forks(t_table *table)
+void	init_table(t_table *table)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ void	init_philo(t_table *table)
 	int	i;
 
 	i = 0;
-	table->philos = malloc(sizeof(t_philo) * (table->info->philos + 1));
+	table->philos = malloc(sizeof(t_philo) * (table->info->philos));
 	if (!table->philos)
 		program_exit(ALLOC_ERROR);
 	while (i < table->info->philos)
@@ -83,10 +83,10 @@ int	main(int argc, char **argv)
 	t_table		table;
 
 	parse(argc, argv, &table);
-	init_forks(&table);
+	init_table(&table);
 	init_philo(&table);
 	if (table.info->philos < 1)
 		program_exit(PARSE_ERROR);
-	run(&table);
+	philo_run(&table);
 	return (0);
 }

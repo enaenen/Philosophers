@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:58 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/22 17:36:18 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 21:16:40 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ enum e_checktime_mode
 	SLEEP_CHECK
 };
 
-
-void	init_philo(t_table *table);
+void	init_table(t_table *table);
 size_t	ft_strlen(const char *s);
-void	run(t_table *table);
+void	philo_run(t_table *table);
 void		parse(int argc, char **argv, t_table *table);
 void	program_exit(int	status);
 t_timestamp	get_time(void);

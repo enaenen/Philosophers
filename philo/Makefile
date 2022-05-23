@@ -6,7 +6,7 @@
 #    By: wchae <wchae@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 16:16:12 by wchae             #+#    #+#              #
-#    Updated: 2022/05/21 22:35:26 by wchae            ###   ########.fr        #
+#    Updated: 2022/05/23 16:55:16 by wchae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,3 +37,5 @@ fclean: clean
 	$(RM) $(NAME)
 
 re:		fclean all
+
+.PHONY: all clean fclean re bonus

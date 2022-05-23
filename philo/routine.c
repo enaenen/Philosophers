@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:07:29 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/22 17:36:51 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 18:01:20 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	philo_even(t_info *info, t_philo *philo)
 	pthread_mutex_lock(&(info->eating));
 	state_print(EATING, info, philo->id);
 	philo->last_eat_time = get_time();
-	philo->eat_cnt++;
+	(philo->eat_cnt)++;
 	pthread_mutex_unlock(&(info->eating));
 	check_time(info, EAT_CHECK);
 	pthread_mutex_unlock(&(info->forks[philo->l_fork]));
@@ -62,7 +62,7 @@ int	philo_odd(t_info *info, t_philo *philo)
 	pthread_mutex_lock(&(info->eating));
 	state_print(EATING, info, philo->id);
 	philo->last_eat_time = get_time();
-	philo->eat_cnt++;
+	(philo->eat_cnt)++;
 	pthread_mutex_unlock(&(info->eating));
 	check_time(info, EAT_CHECK);
 	pthread_mutex_unlock(&(info->forks[philo->r_fork]));
