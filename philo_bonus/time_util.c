@@ -6,11 +6,11 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:09:34 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 22:09:39 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/22 17:35:22 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 t_timestamp	get_time(void)
 {
@@ -24,19 +24,19 @@ t_timestamp	get_time(void)
 
 void	check_time(t_info *info, int mode)
 {
-	t_timestamp	duration;
-	t_timestamp	time_start;
-	t_timestamp	time_cur;
+	t_timestamp	limit;
+	t_timestamp	start;
+	t_timestamp	current;
 
-	if (mode == 1)
-		duration = info->tte;
-	else if (mode == 2)
-		duration = info->tts;
-	time_start = get_time();
+	if (mode == EAT_CHECK)
+		limit = info->tte;
+	else if (mode == SLEEP_CHECK)
+		limit = info->tts;
+	start = get_time();
 	while (!(info->finish))
 	{
-		time_cur = get_time();
-		if (time_cur - time_start >= duration)
+		current = get_time();
+		if (limit <= current - start)
 			return ;
 		usleep(10);
 	}

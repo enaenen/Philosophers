@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:58 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/23 21:16:40 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 23:11:14 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@
 # define DEAD "\033[31m died\x1b[0m"
 
 typedef long long	t_timestamp;
-typedef struct	s_info
+
+typedef struct s_info
 {
-	int	philos;
+	int				philos;
 	unsigned int	ttd;
 	unsigned int	tte;
 	unsigned int	tts;
@@ -71,14 +72,14 @@ enum e_checktime_mode
 	SLEEP_CHECK
 };
 
-void	init_table(t_table *table);
-size_t	ft_strlen(const char *s);
-void	philo_run(t_table *table);
+void		init_table(t_table *table);
+size_t		ft_strlen(const char *s);
+void		philo_run(t_table *table);
 void		parse(int argc, char **argv, t_table *table);
-void	program_exit(int	status);
+void		program_exit(int status);
 t_timestamp	get_time(void);
-void	check_time(t_info *info, int mode);
-void	state_print(char *msg, t_info *info, int philo_id);
-void	*routine(void *philo);
+void		check_time(t_info *info, int mode);
+void		state_print(char *msg, t_info *info, int philo_id);
+void		*routine(void *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:04:57 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/23 21:16:22 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 21:43:30 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	destory_philo(t_table *table)
 	int	i;
 
 	i = 0;
-	while (i < table->info->philos)
+	while (i <= table->info->philos)
 	{
 		pthread_join(table->philos[i].thread_id, NULL);
 		i++;

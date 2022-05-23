@@ -6,7 +6,7 @@
 #    By: wchae <wchae@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 16:16:12 by wchae             #+#    #+#              #
-#    Updated: 2022/05/23 16:55:16 by wchae            ###   ########.fr        #
+#    Updated: 2022/05/23 21:26:43 by wchae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS = $(SRCS:.c=.o)
 	$(CC) $(CFLAGS) -o $@ -c $?
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS)
+	$(CC) -o $(NAME) $(OBJS) -lpthread
 
 all:	$(NAME)
 

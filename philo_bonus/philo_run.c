@@ -6,28 +6,46 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 22:04:57 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 22:36:43 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 22:56:58 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
+
+void	close_seamphore(t_table *table)
+{
+	sem_close(table->info->forks);
+	sem_close(table->info->forks);
+	sem_close(table->info->forks);
+	sem_close(table->info->forks);
+	sem_unlink("/forks");
+	sem_unlink("/print");
+	sem_unlink("/eating");
+	sem_unlink("ready");
+}
 
 void	destory_philo(t_table *table)
 {
 	int	i;
+	int	signal;
 
 	i = 0;
 	while (i < table->info->philos)
 	{
-		pthread_join(table->philos[i].thread_id, NULL);
+		waitpid(-1, &signal, 0);
+		if (signal)
+		{
+			i = 0;
+			while (i < table->info->philos)
+			{
+				kill(table->philos[i].pid, SIGKILL);
+				i++;
+			}
+			break ;
+		}
 		i++;
 	}
-	i = 0;
-	while (i < table->info->philos)
-		pthread_mutex_destroy(&(table->info->forks[i++]));
-	pthread_mutex_destroy(&(table->info->print));
-	pthread_mutex_destroy(&(table->info->eating));
-	free(table->info->forks);
+	close_seamphore(table);
 	free(table->philos);
 	free(table->info);
 }
@@ -47,47 +65,24 @@ void	check_must_eat(t_table *table)
 	}
 }
 
-void	check_table(t_table *table)
+void	philo_run(t_table *table)
 {
 	int		i;
-	t_philo	*cur;
-
-	while (!table->info->eat_finish)
-	{
-		i = 0;
-		while (i < table->info->philos && !(table->info->finish))
-		{
-			pthread_mutex_lock(&(table->info->eating));
-			cur = &(table->philos[i]);
-			if (get_time() - cur->time > table->info->ttd)
-			{
-				state_print(DEAD, table->info, i);
-				table->info->finish = 1;
-			}
-			pthread_mutex_unlock(&(table->info->eating));
-			i++;
-		}
-		if (table->info->finish)
-			break ;
-		check_must_eat(table);
-	}
-}
-
-void	run(t_table *table)
-{
-	int		i;
-	void	*philo;
+	t_philo	*philo;
 
 	i = 0;
 	table->info->start_time = get_time();
+	philo = table->philos;
+	sem_wait(table->info->ready);
 	while (i < table->info->philos)
 	{
-		philo = (void *)&table->philos[i];
-		if (pthread_create(&(table->philos[i].thread_id), NULL, routine, philo))
-			program_exit(ALLOC_ERROR);
-		table->philos[i].time = get_time();
+		philo[i].pid = fork();
+		if (philo[i].pid < 0)
+			program_exit(FORK_ERROR);
+		if (philo[i].pid == 0)
+			routine(&philo[i]);
 		i++;
 	}
-	check_table(table);
+	sem_post(table->info->ready);
 	destory_philo(table);
 }

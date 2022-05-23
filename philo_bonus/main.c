@@ -6,11 +6,11 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:18:42 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 22:13:14 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/23 21:57:45 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -28,34 +28,33 @@ void	program_exit(int status)
 
 	if (!status)
 		exit(EXIT_SUCCESS);
-	if (status == PARSE_ERROR)
+	else if (status == PARSE_ERROR)
 		msg = "INPUT ERROR usage : ./philo philos ttd tte tts [musteat]\n";
-	if (status == ALLOC_ERROR)
+	else if (status == ALLOC_ERROR)
 		msg = "ALLOC ERROR\n";
-	if (status == MUTEX_ERROR)
-		msg = "MUTEX ERROR\n";
+	else if (status == SEMAP_ERROR)
+		msg = "SEMAPHORE ERROR\n";
+	else if (status == FORK_ERROR)
+		msg = "FORK_ERROR\n";
 	write(2, msg, ft_strlen(msg));
 	exit(EXIT_FAILURE);
 }
 
-void	init_forks(t_table *table)
+void	init_table(t_table *table)
 {
-	int	i;
+	t_info	*info;
 
-	i = 0;
-	if (pthread_mutex_init(&(table->info->print), NULL))
-		program_exit(MUTEX_ERROR);
-	if (pthread_mutex_init(&(table->info->eating), NULL))
-		program_exit(MUTEX_ERROR);
-	table->info->forks = malloc(sizeof(pthread_mutex_t) * table->info->philos);
-	if (!(table->info->forks))
-		program_exit(ALLOC_ERROR);
-	while (i < table->info->philos)
-	{
-		if (pthread_mutex_init(&(table->info->forks[i]), NULL))
-			program_exit(MUTEX_ERROR);
-		i++;
-	}
+	info = table->info;
+	sem_unlink("/forks");
+	sem_unlink("/print");
+	sem_unlink("/eating");
+	sem_unlink("/ready");
+	info->forks = sem_open("/forks", O_CREAT, 0644, info->philos);
+	info->print = sem_open("/print", O_CREAT, 0644, 1);
+	info->eating = sem_open("/eating", O_CREAT, 0644, 1);
+	info->ready = sem_open("/ready", O_CREAT, 0644, 1);
+	if (!(info->ready && info->print && info->eating && info->ready))
+		program_exit(SEMAP_ERROR);
 }
 
 void	init_philo(t_table *table)
@@ -63,17 +62,15 @@ void	init_philo(t_table *table)
 	int	i;
 
 	i = 0;
-	table->philos = malloc(sizeof(t_philo) * (table->info->philos + 1));
+	table->philos = malloc(sizeof(t_philo) * (table->info->philos));
 	if (!table->philos)
 		program_exit(ALLOC_ERROR);
 	while (i < table->info->philos)
 	{
 		table->philos[i].id = i;
-		table->philos[i].l_fork = i;
-		table->philos[i].r_fork = (i + 1) % table->info->philos;
 		table->philos[i].eat_cnt = 0;
 		table->philos[i].info = table->info;
-		table->philos[i].time = 0;
+		table->philos[i].last_eat_time = 0;
 		i++;
 	}
 }
@@ -83,10 +80,10 @@ int	main(int argc, char **argv)
 	t_table		table;
 
 	parse(argc, argv, &table);
-	init_forks(&table);
+	init_table(&table);
 	init_philo(&table);
 	if (table.info->philos < 1)
 		program_exit(PARSE_ERROR);
-	run(&table);
+	philo_run(&table);
 	return (0);
 }

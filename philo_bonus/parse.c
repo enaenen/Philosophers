@@ -6,11 +6,11 @@
 /*   By: wchae <wchae@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:47:31 by wchae             #+#    #+#             */
-/*   Updated: 2022/05/21 22:15:14 by wchae            ###   ########.fr       */
+/*   Updated: 2022/05/22 16:06:38 by wchae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 static int	ft_isdigit(int c)
 {
