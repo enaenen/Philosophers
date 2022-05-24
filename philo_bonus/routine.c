@@ -89,7 +89,7 @@ void	routine(t_philo *philo)
 		state_print(SLEEPING, info, philo->id);
 		check_time(info, SLEEP_CHECK);
 		state_print(THINKING, info, philo->id);
-		usleep(10);
+		usleep(1000);
 	}
 	pthread_join(philo->check, NULL);
 	if (philo->info->finish)

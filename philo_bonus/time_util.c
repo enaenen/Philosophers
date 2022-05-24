@@ -38,6 +38,6 @@ void	check_time(t_info *info, int mode)
 		current = get_time();
 		if (limit <= current - start)
 			return ;
-		usleep(10);
+		usleep(1000);
 	}
 }
