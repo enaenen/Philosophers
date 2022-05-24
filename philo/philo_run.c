@@ -17,7 +17,7 @@ void	destory_philo(t_table *table)
 	int	i;
 
 	i = 0;
-	while (i <= table->info->philos)
+	while (i < table->info->philos)
 	{
 		pthread_join(table->philos[i].thread_id, NULL);
 		i++;

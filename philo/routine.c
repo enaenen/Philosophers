@@ -82,7 +82,7 @@ void	*routine(void *philo)
 	info = cur->info;
 	flag = 0;
 	if (cur->id % 2)
-		usleep(10000);
+		usleep(30000);
 	while (!info->finish && !info->eat_finish)
 	{
 		if (cur->id % 2 == 0)
@@ -94,7 +94,7 @@ void	*routine(void *philo)
 		state_print(SLEEPING, info, cur->id);
 		check_time(info, SLEEP_CHECK);
 		state_print(THINKING, info, cur->id);
-		usleep(10);
+		usleep(1000);
 	}
 	return (0);
 }
