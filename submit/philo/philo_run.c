@@ -87,7 +87,7 @@ static void	ft_check_table(t_table *table)
 		pthread_mutex_lock(&(table->info->shared));
 		check = table->info->wait_cnt;
 		pthread_mutex_unlock(&(table->info->shared));
-		if(check == philo_cnt)
+		if (check == philo_cnt)
 		{
 			check_table(table);
 			destory_philo(table);

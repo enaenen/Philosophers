@@ -41,7 +41,7 @@ typedef struct s_info
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	eating;
-	pthread_mutex_t shared;
+	pthread_mutex_t	shared;
 }		t_info;
 
 typedef struct s_philo

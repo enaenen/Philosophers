@@ -69,6 +69,26 @@ int	philo_odd(t_info *info, t_philo *philo)
 	return (0);
 }
 
+static void	eating(t_info *info, t_philo *cur)
+{
+	int		flag;
+
+	flag = 0;
+	while (!info->finish && !info->eat_finish)
+	{
+		if (cur->id % 2 == 0)
+			flag = philo_even(info, cur);
+		else
+			flag = philo_odd(info, cur);
+		if (flag)
+			break ;
+		state_print(SLEEPING, info, cur->id);
+		check_time(info, SLEEP_CHECK);
+		state_print(THINKING, info, cur->id);
+		delay_time(info, cur);
+	}
+}
+
 void	*routine(void *philo)
 {
 	t_info	*info;
@@ -84,19 +104,6 @@ void	*routine(void *philo)
 	pthread_mutex_unlock(&(info->shared));
 	if (cur->id % 2)
 		usleep(5000);
-	while (!info->finish && !info->eat_finish)
-	{
-		if (cur->id % 2 == 0)
-			flag = philo_even(info, cur);
-		else
-			flag = philo_odd(info, cur);
-		if (flag)
-			break ;
-		state_print(SLEEPING, info, cur->id);
-		check_time(info, SLEEP_CHECK);
-		state_print(THINKING, info, cur->id);
-		delay_time(info, cur);
-		//usleep(500);
-	}
+	eating(info, cur);
 	return (0);
 }
