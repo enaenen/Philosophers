@@ -16,7 +16,8 @@ CC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
 AR		= ar rcs
 RM		= rm -f
-LEAK	= -g3 -fsanitize=address
+LEAK	= -g3 -fsanitize=thread
+TEMP    =
 
 SRC = main.c parse.c philo_run.c routine.c time_util.c
 SRCS = $(addprefix $(SRCS_DIR), $(SRC))
@@ -36,8 +37,12 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
+leak: TEMP+=$(LEAK)
+
+leak: all
+
 re:
 	make fclean
 	make all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus leak

@@ -38,6 +38,7 @@ fclean: clean
 	$(RM) $(NAME)
 
 leak: TEMP+=$(LEAK)
+
 leak: all
 
 re:

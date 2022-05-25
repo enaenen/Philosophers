@@ -18,7 +18,7 @@ t_timestamp	get_time(void)
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	ret = time.tv_sec * 1000 + time.tv_usec / 1000;
+	ret = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (ret);
 }
 

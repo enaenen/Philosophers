@@ -86,5 +86,6 @@ void		check_time(t_info *info, int mode);
 void		state_print(char *msg, t_info *info, int philo_id);
 void		routine(t_philo *philo);
 t_timestamp	get_time(void);
+void		delay_time(t_info *info, t_philo *cur);
 
 #endif

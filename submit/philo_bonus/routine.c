@@ -63,7 +63,7 @@ void	*checking(void	*tmp)
 		sem_post(info->eating);
 		if (info->finish)
 			break ;
-		usleep(100);
+		usleep(1000);
 		if (info->must_eat && info->must_eat <= philo->eat_cnt)
 			break ;
 	}
@@ -89,7 +89,7 @@ void	routine(t_philo *philo)
 		state_print(SLEEPING, info, philo->id);
 		check_time(info, SLEEP_CHECK);
 		state_print(THINKING, info, philo->id);
-		usleep(1000);
+		delay_time(info, philo);
 	}
 	pthread_join(philo->check, NULL);
 	if (philo->info->finish)

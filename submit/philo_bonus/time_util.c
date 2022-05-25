@@ -26,7 +26,6 @@ void	check_time(t_info *info, int mode)
 {
 	t_timestamp	limit;
 	t_timestamp	start;
-	t_timestamp	current;
 
 	if (mode == EAT_CHECK)
 		limit = info->tte;
@@ -35,9 +34,21 @@ void	check_time(t_info *info, int mode)
 	start = get_time();
 	while (!(info->finish))
 	{
-		current = get_time();
-		if (limit <= current - start)
+		if (limit <= get_time() - start)
 			return ;
-		usleep(1000);
+		usleep(500);
+	}
+}
+
+void	delay_time(t_info *info, t_philo *cur)
+{
+	t_timestamp	limit;
+	t_timestamp	start;
+
+	start = cur->last_eat_time;
+	limit = info->ttd * 0.8;
+	while (limit >= get_time() - start)
+	{
+		usleep(500);
 	}
 }
