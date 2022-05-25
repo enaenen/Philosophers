@@ -63,7 +63,7 @@ void	*checking(void	*tmp)
 		sem_post(info->eating);
 		if (info->finish)
 			break ;
-		usleep(1000);
+		usleep(500);
 		if (info->must_eat && info->must_eat <= philo->eat_cnt)
 			break ;
 	}

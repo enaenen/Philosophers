@@ -27,7 +27,7 @@ OBJS = $(SRCS:.c=.o)
 	$(CC) $(CFLAGS) -o $@ -c $?
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) -lpthread
+	$(CC) -o $(NAME) $(TEMP) $(OBJS) -lpthread
 
 all:	$(NAME)
 
